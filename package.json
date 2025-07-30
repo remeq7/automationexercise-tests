@@ -1,0 +1,25 @@
+{
+  "name": "automationexercise-tests",
+  "version": "1.0.0",
+  "description": "Automated E2E tests for the automationexercise.com website using Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remeq7/automationexercise-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/remeq7/automationexercise-tests/issues"
+  },
+  "homepage": "https://github.com/remeq7/automationexercise-tests#readme",
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.2",
+    "cypress": "^14.5.3",
+    "typescript": "^5.8.3"
+  }
+}
