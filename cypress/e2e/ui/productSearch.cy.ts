@@ -1,12 +1,12 @@
 import { registerUserByApi, loginUserByApi } from "../../api-calls/auth";
+import { generateTestCredentials } from "../../support/utils";
 
 describe("Product search", () => {
-  const email = `test${Date.now()}@mail.com`;
-  const password = "Test1234";
-
+  const { email, password } = generateTestCredentials();
   before(() => {
     // Rejestracja użytkownika przez API
     cy.clearCookies();
+
     registerUserByApi("Test User", email, password); // helper
     loginUserByApi(email, password); //fejkowe logowanie przez API
   });
