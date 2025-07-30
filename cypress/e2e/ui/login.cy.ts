@@ -1,4 +1,7 @@
 describe("Login - negative test", () => {
+  before(() => {
+    cy.clearCookies();
+  });
   it("Should show error with invalid credentials", () => {
     cy.visit("https://automationexercise.com/login");
 
