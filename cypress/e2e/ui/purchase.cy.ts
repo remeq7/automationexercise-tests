@@ -1,5 +1,6 @@
 import { registerUserByApi, loginUserByApi } from "../../api-calls/auth";
 import { generateTestCredentials } from "../../support/utils";
+import { cardDetails } from "../../support/Users";
 
 describe("E2E Purchase Flow", () => {
   before(() => {
@@ -23,11 +24,11 @@ describe("E2E Purchase Flow", () => {
     cy.get('textarea[name="message"]').type("Please deliver ASAP.");
     cy.contains("Place Order").click();
 
-    cy.get('input[name="name_on_card"]').type("Test User");
-    cy.get('input[name="card_number"]').type("1234123412341234");
-    cy.get('input[name="cvc"]').type("123");
-    cy.get('input[name="expiry_month"]').type("12");
-    cy.get('input[name="expiry_year"]').type("2030");
+    cy.get('input[name="name_on_card"]').type(cardDetails.nameOnCard);
+    cy.get('input[name="card_number"]').type(cardDetails.cardNumber);
+    cy.get('input[name="cvc"]').type(cardDetails.CVC);
+    cy.get('input[name="expiry_month"]').type(cardDetails.expirationMonth);
+    cy.get('input[name="expiry_year"]').type(cardDetails.expirationYear);
     cy.contains("Pay and Confirm Order").click();
 
     cy.contains("Congratulations! Your order has been confirmed!");

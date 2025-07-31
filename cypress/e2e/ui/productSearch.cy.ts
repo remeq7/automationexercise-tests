@@ -4,15 +4,13 @@ import { generateTestCredentials } from "../../support/utils";
 describe("Product search", () => {
   const { email, password } = generateTestCredentials();
   before(() => {
-    // Rejestracja użytkownika przez API
     cy.clearCookies();
-
     registerUserByApi("Test User", email, password); // helper
     loginUserByApi(email, password); //fejkowe logowanie przez API
   });
 
-  it('should find products when searching for "shirt"', () => {
-    cy.visit("https://automationexercise.com/products");
+  it('should find products when searching for "dress"', () => {
+    cy.visit("/products");
     cy.get("#search_product").type("Dress");
     cy.get("#submit_search").click();
 
@@ -33,7 +31,7 @@ describe("Product search", () => {
   });
 
   it("should show no results when searching for nonsense", () => {
-    cy.visit("https://automationexercise.com/products");
+    cy.visit("/products");
     cy.get("#search_product").type("xyz123456");
     cy.get("#submit_search").click();
 
