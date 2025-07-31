@@ -1,4 +1,5 @@
-describe("API 5 - POST To Search Product", () => {
+describe("Search Product API - valid and missing parameter cases", () => {
+  //API 5: POST To Search Product
   it("should return a list of searched products", () => {
     cy.request({
       method: "POST",
@@ -12,6 +13,7 @@ describe("API 5 - POST To Search Product", () => {
 
       const body =
         typeof res.body === "string" ? JSON.parse(res.body) : res.body;
+      expect(body).to.have.property("responseCode", 200);
 
       expect(body).to.have.property("products");
       expect(body.products).to.be.an("array");
@@ -23,7 +25,7 @@ describe("API 5 - POST To Search Product", () => {
       });
     });
   });
-
+  //API 6: POST To Search Product without search_product parameter
   it("should return 400 when search_product parameter is missing", () => {
     cy.request({
       method: "POST",
@@ -36,7 +38,7 @@ describe("API 5 - POST To Search Product", () => {
 
       const body =
         typeof res.body === "string" ? JSON.parse(res.body) : res.body;
-
+      expect(body).to.have.property("responseCode", 400);
       expect(body).to.have.property(
         "message",
         "Bad request, search_product parameter is missing in POST request."

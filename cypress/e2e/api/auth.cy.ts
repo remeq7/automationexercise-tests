@@ -1,33 +1,32 @@
-describe("API 7 - Verify Login with valid details", () => {
-  it("should verify user login successfully", () => {
-    const email = "uwb04509@toaik.com"; // <-- zamień na poprawny email
-    const password = "Newpassword123!"; // <-- zamień na poprawne hasło
+import { validUser, invalidUser } from "../../support/Users";
 
+describe("API - Verify Login endpoint tests", () => {
+  // API 7: valid details
+  it("should verify user login successfully", () => {
     cy.request({
       method: "POST",
       url: "https://automationexercise.com/api/verifyLogin",
       form: true,
       body: {
-        email,
-        password,
+        email: validUser.email,
+        password: validUser.password,
       },
     }).then((res) => {
-      expect(res.status).to.eq(200); // sprawdzamy status HTTP
-      expect(res.body).to.include("User exists!"); // sprawdzamy treść odpowiedzi
+      expect(res.status).to.eq(200);
+      expect(res.body).to.include("User exists!");
     });
   });
 
+  // API 8: missing email
   it("should return 400 when email is missing", () => {
-    const password = "123456"; // przykładowe hasło
-
     cy.request({
       method: "POST",
       url: "https://automationexercise.com/api/verifyLogin",
       form: true,
-      failOnStatusCode: false, // ważne! bo oczekujemy błędu 400
+      failOnStatusCode: false,
       body: {
-        password,
-        // brak pola "email"
+        password: invalidUser.password,
+        // no "email" field
       },
     }).then((res) => {
       expect(res.status).to.eq(200); // te kody do poprawy bo przychodza w body
@@ -40,11 +39,12 @@ describe("API 7 - Verify Login with valid details", () => {
     });
   });
 
+  // API 9: wrong method (DELETE)
   it("should return 405 for unsupported DELETE method", () => {
     cy.request({
       method: "DELETE",
       url: "https://automationexercise.com/api/verifyLogin",
-      failOnStatusCode: false, // bo 405 to nie 2xx
+      failOnStatusCode: false,
     }).then((res) => {
       expect(res.status).to.eq(200);
       const body =
@@ -57,6 +57,7 @@ describe("API 7 - Verify Login with valid details", () => {
     });
   });
 
+  // API 10: invalid details
   it("should return 404 for invalid login credentials", () => {
     cy.request({
       method: "POST",
@@ -64,8 +65,8 @@ describe("API 7 - Verify Login with valid details", () => {
       failOnStatusCode: false, // bo spodziewamy się błędu
       form: true,
       body: {
-        email: "nonexistentuser@example.com",
-        password: "wrongpassword",
+        email: invalidUser.email,
+        password: invalidUser.password,
       },
     }).then((res) => {
       expect(res.status).to.eq(200);

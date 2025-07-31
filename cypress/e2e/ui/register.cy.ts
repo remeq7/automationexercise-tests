@@ -1,4 +1,4 @@
-import { User } from "../../support/Users";
+import { validUser } from "../../support/Users";
 import { registerUserByApi } from "../../api-calls/auth";
 /// <reference types="cypress" />
 
@@ -54,7 +54,7 @@ describe("User Registration", () => {
 
   it("should show error when email already exists", () => {
     cy.get('input[data-qa="signup-name"]').type("ExistingUser");
-    cy.get('input[data-qa="signup-email"]').type(User.email);
+    cy.get('input[data-qa="signup-email"]').type(validUser.email);
     cy.get('button[data-qa="signup-button"]').click();
 
     cy.contains("Email Address already exist!").should("be.visible");

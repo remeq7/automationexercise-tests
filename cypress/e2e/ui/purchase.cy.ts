@@ -1,11 +1,10 @@
 import { registerUserByApi, loginUserByApi } from "../../api-calls/auth";
+import { generateTestCredentials } from "../../support/utils";
 
 describe("E2E Purchase Flow", () => {
-  const email = `test${Date.now()}@mail.com`;
-  const password = "Test1234";
-
   before(() => {
     // Rejestracja użytkownika przez API
+    const { email, password } = generateTestCredentials();
     cy.clearCookies();
     registerUserByApi("Test User", email, password); // helper
     loginUserByApi(email, password); //fejkowe logowanie przez API

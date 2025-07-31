@@ -1,9 +1,8 @@
-/// <reference types="cypress" />
+import { generateTestCredentials } from "../../support/utils";
 
-describe("API 11 - Create/Register User Account", () => {
-  const timestamp = Date.now();
-  const email = `apiuser${timestamp}@mail.com`;
-
+describe("User Account API - CRUD operations", () => {
+  const { email } = generateTestCredentials();
+  //API 11: POST To Create/Register User Account
   it("should create a user successfully", () => {
     cy.request({
       method: "POST",
@@ -28,13 +27,13 @@ describe("API 11 - Create/Register User Account", () => {
         zipcode: "A1B2C3",
         mobile_number: "123456789",
       },
-      failOnStatusCode: false, // zapobiegnie błędom, jeśli np. user już istnieje
+      failOnStatusCode: false,
     }).then((res) => {
       expect(res.status).to.eq(200);
       expect(res.body).to.contain("User created");
     });
   });
-
+  //API 13: PUT METHOD To Update User Account
   it("should update a user successfully", function () {
     cy.request({
       method: "PUT",
@@ -65,43 +64,23 @@ describe("API 11 - Create/Register User Account", () => {
       expect(res.body).to.contain("User updated!");
     });
   });
-
+  //API 14: GET user account detail by email
   it("should get user details successfully", function () {
     cy.request({
       method: "GET",
       url: `https://automationexercise.com/api/getUserDetailByEmail?email=${email}`,
     }).then((res) => {
-      expect(res.status).to.eq(200); // HTTP status
+      expect(res.status).to.eq(200);
 
       const body =
         typeof res.body === "string" ? JSON.parse(res.body) : res.body;
 
-      expect(body).to.have.property("responseCode", 200); // response code z body
-      expect(body).to.have.property("user"); // czy zawiera obiekt user
-      expect(body.user).to.have.property("email", email); // potwierdzenie poprawnego maila
-      //to nie działa
-      //   expect(body.user).to.include.all.keys(
-      //     "id",
-      //     "name",
-      //     "email",
-      //     "title",
-      //     "birth_day",
-      //     "birth_month",
-      //     "birth_year",
-      //     "first_name",
-      //     "last_name",
-      //     "company",
-      //     "address1",
-      //     "address2",
-      //     "country",
-      //     "state",
-      //     "city",
-      //     "zipcode",
-      //     "mobile_number"
-      //   );
+      expect(body).to.have.property("responseCode", 200);
+      expect(body).to.have.property("user");
+      expect(body.user).to.have.property("email", email);
     });
   });
-
+  //API 12: DELETE METHOD To Delete User Account
   it("should delete a user successfully", () => {
     cy.request({
       method: "DELETE",
