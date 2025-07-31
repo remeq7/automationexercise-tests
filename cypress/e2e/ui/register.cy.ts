@@ -41,10 +41,6 @@ describe("User Registration", () => {
   it("should confirm login and delete account", () => {
     cy.get('a[data-qa="continue-button"]').click();
     cy.contains("Logged in as").should("be.visible");
-
-    cy.log(`Registered user: ${email}`);
-
-    // Clean up
     cy.contains("Delete Account").click();
     cy.contains("Account Deleted!").should("be.visible");
   });

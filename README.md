@@ -2,6 +2,8 @@
 
 A set of end-to-end automated tests for [automationexercise.com](https://automationexercise.com), built using Cypress and TypeScript.
 
+![Run Cypress Tests](https://github.com/remeq7/automationexercise-tests/actions/workflows/cypress.yml/badge.svg)
+
 ## 📁 Project Structure
 
 ```
